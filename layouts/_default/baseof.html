@@ -35,7 +35,7 @@
 {{ range $p := .Site.RegularPages }}
   {{ with $p.Params.thumbnail }}
 .thumb-{{ $p.File.UniqueID }} {
-  background-image: url("{{ . | absURL }}");
+  background-image: url("{{ printf "%s%s" $p.Permalink . | absURL }}");
 }
   {{ end }}
 {{ end }}

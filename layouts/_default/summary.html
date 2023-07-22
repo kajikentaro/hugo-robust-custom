@@ -1,6 +1,8 @@
 <article class="sn">
 
+  {{ if .Page.Params.thumbnail | default false}}
   <div class="thumb thumb-{{ .File.UniqueID }}"></div>
+  {{ end }}
 
   <header class="article-header">
     <h1 class="title">{{ .Title }}</h1>
