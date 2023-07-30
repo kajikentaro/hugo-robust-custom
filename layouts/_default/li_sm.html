@@ -1,15 +1,10 @@
 <article class="lism">
   <a href="{{ .Permalink }}">
-    <div class="thumb thumb-{{ .File.UniqueID }}"></div>
-
     <div class="inner">
       <div class="title">{{ .Title }}</div>
+      <div class="summary">{{ substr .Summary 0 60 | plainify | safeHTML }}</div>
 
       <ul class="facts sm">
-        <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="{{ .Date.Format "2007-01-02T15:04:05JST" }}">{{ .Date.Format ( .Site.Params.dateformat | default "Jan 2, 2006") }}</time></li>
-        {{ with .Section }}
-        <li><i class="fas fa-bookmark" aria-hidden="true"></i>{{ . | upper }}</li>
-        {{ end }}
         {{ if eq (getenv "HUGO_ENV") "DEV" }}
         <li>{{ .WordCount }} Words</li>
         {{ end }}
@@ -17,6 +12,18 @@
         <li style="color: #2196f3;">DRAFT</li>
         {{ end }}
       </ul>
+
+            <ul class="terms">
+              {{ range $category := .Params.categories }}
+              <li class="term">
+                <span href="{{ $.Site.BaseURL }}categories/{{ . | urlize }}/">{{ . }}</span>
+              </li>
+              {{ end }}
+              <li class="time" aria-hidden="true">
+                <span class="fas fa-calendar"></span>
+                <time datetime="{{ .Date.Format "2006-01-02T15:04:05JST" }}">{{ .Date.Format ( .Site.Params.dateformat | default "Jan 2, 2006") }}</time>
+              </li>
+            </ul>
 
     </div>
   </a>
