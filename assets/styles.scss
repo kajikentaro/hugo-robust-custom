@@ -160,9 +160,8 @@ article {
 article.li {
   background-color: #fff;
   box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-  height: 20rem;
   overflow: hidden;
-  margin: 1rem 0;
+  margin: 1rem 0 0;
 }
 
 article.li > a {
@@ -183,17 +182,47 @@ article.li .title {
   font-size: 1.2rem;
   line-height: 1.5rem;
   margin-bottom: .5rem;
+  position:relative;
+  margin-left:0.8em;
+}
+
+article.li .title::before{
+  position: absolute;
+  left: -0.8em;
+  height: 100%;
+  display: block;
+  width: 4px;
+  content: "";
+  background-color: #3399cc;
 }
 
 article.li .summary {
   font-size: .8rem;
-  height: 6rem;
+  color: #4a4a4a;
   overflow: hidden;
-  margin-top: 1rem;
+  margin: 0.8rem 0;
 }
 
 article.li .summary::after {
   content: '...';
+}
+
+article.li ul.terms {
+  display: flex;
+  justify-content: right;
+  font-size: 0.7em;
+  gap: 0.6em;
+
+  li{
+    padding: 4px;
+  }
+
+  li.term{
+    background-color: #3399ccd1;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+  }
 }
 
 article.lism {

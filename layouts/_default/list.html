@@ -14,17 +14,14 @@
     {{ if .IsHome }}{{ $pctx = .Site }}{{ end }}
     {{ $paginator := .Paginate $pctx.RegularPages }}
     {{ range $paginator.Pages }}
-    <div class="mcol c6">
+    <div class="mcol">
       <article class="li">
         <a href="{{ .Permalink }}">
-          <div class="thumb thumb-{{ .File.UniqueID }}"></div>
 
           <div class="inner">
             <h2 class="title">{{ .Title }}</h2>
 
             <ul class="facts">
-              <li><i class="fas fa-calendar" aria-hidden="true"></i><time datetime="{{ .Date.Format "2006-01-02T15:04:05JST" }}">{{ .Date.Format ( .Site.Params.dateformat | default "Jan 2, 2006") }}</time></li>
-              {{ with .Section }}<li><i class="fas fa-bookmark" aria-hidden="true"></i>{{ . | upper }}</li>{{ end }}
               {{ if eq (getenv "HUGO_ENV") "DEV" }}
               <li>{{ .WordCount }} Words</li>
               {{ end }}
@@ -33,7 +30,18 @@
               {{ end }}
             </ul>
 
-            <div class="summary">{{ plainify .Summary | safeHTML }}</div>
+            <div class="summary">{{ substr .Summary 0 110 | plainify | safeHTML }}</div>
+            <ul class="terms">
+              {{ range $category := .Params.categories }}
+              <li class="term">
+                <span href="{{ $.Site.BaseURL }}categories/{{ . | urlize }}/">{{ . }}</span>
+              </li>
+              {{ end }}
+              <li class="time" aria-hidden="true">
+                <span class="fas fa-calendar"></span>
+                <time datetime="{{ .Date.Format "2006-01-02T15:04:05JST" }}">{{ .Date.Format ( .Site.Params.dateformat | default "Jan 2, 2006") }}</time>
+              </li>
+            </ul>
           </div>
         </a>
       </article>
