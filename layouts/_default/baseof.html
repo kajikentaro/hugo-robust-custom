@@ -85,13 +85,19 @@
       </div>
     </main>
 
-    <footer class="l-footer">
-      <div class="l-container">
-        <p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}<span class="h-logo">&copy; {{ .Site.Title }}</span>{{ end }}</p>
-        <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-        </aside>
+    <footer class="pc-footer">
+      <div class="container">
+        <div class="left">
+          <p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}<span class="h-logo">&copy; {{ .Site.Title }}</span>{{ end }}</p>
+          <p>{{ .Site.Params.copyright }}</p>
+        </div>
+        <div class="right">
+          <aside>
+            <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+            <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+            <p><a href="https://github.com/kajikentaro/hugo-robust-custom">Some updates into Robust</a>.</p>
+          </aside>
+        </div>
       </div>
     </footer>
 

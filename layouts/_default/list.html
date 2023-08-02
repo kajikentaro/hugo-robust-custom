@@ -14,7 +14,7 @@
     {{ if .IsHome }}{{ $pctx = .Site }}{{ end }}
     {{ $paginator := .Paginate $pctx.RegularPages }}
     {{ range $paginator.Pages }}
-    <div class="mcol">
+    <div class="mcol li-wrapper">
       <article class="li">
         <a href="{{ .Permalink }}">
 
