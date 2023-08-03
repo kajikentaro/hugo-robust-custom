@@ -72,14 +72,19 @@
       <div class="l-container">
         <div class="mrow">
         <div class="mcol c8">
+          {{ partial "ad_tile.html" "horizontal" }}
           {{ block "main" . }}{{ end }}
+          {{ partial "ad_tile.html" "auto" }}
         </div>
         <div class="mcol c4">
           <aside class="l-sidebar">
+            {{ partial "ad_tile.html" "rectangle" }}
             {{ partial "author.html" . }}
             {{ partial "latests.html" . }}
+            {{ partial "ad_tile.html" "rectangle" }}
             {{ partial "categories.html" . }}
             {{ partial "tags.html" . }}
+            {{ partial "ad_tile.html" "auto" }}
           </aside>
         </div>
       </div>
