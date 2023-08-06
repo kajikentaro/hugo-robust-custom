@@ -1,0 +1,31 @@
+<!-- OGP -->
+{{ if $.IsHome }}
+<meta property="og:type" content="article">
+{{ else }}
+<meta property="og:type" content="website">
+{{ end }}
+
+{{ $desc := substr .Summary 0 110 | plainify | safeHTML }}
+{{ $base64Title := .Title | urlquery }}
+{{ $img := printf "https://str-to-img.kajindowsxp.com?text=%s" $base64Title }}
+
+{{ with $.Page }}
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $img }}">
+<meta property="og:site_name" content="{{ $.Site.Title }}">
+<meta property="article:published_time" content="{{ .Date }}">
+<meta property="article:modified_time" content="{{ .Lastmod }}">
+{{ if ne .Params.categories nil }}
+<meta property="article:section" content="{{ delimit .Params.categories ","}}">
+{{ end }}
+<!-- /OGP -->
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:description" content="{{ $desc }}">
+<meta property="twitter:title" content="{{ .Title }}">
+<meta property="twitter:url" content="{{ .Permalink }}">
+<meta name="twitter:image" content="{{ $img }}">
+<!-- /Twitter Card -->
+{{ end }}
