@@ -55,7 +55,7 @@
   <ul>
     {{ range $paginator.Pagers }}
       {{ if eq .PageNumber $paginator.PageNumber }}
-        <li><a class="disabled">{{ .PageNumber }}</a></li>
+        <li><span class="disabled">{{ .PageNumber }}</span></li>
       {{ else }}
         <li><a href="{{ .URL }}" >{{ .PageNumber }}</a></li>
       {{ end }}
