@@ -51,14 +51,49 @@
   </div>
 </div>
 
+{{ $p := .Paginate $pctx.RegularPages }}
+{{/*  activate buttons for two pages before and after the current page  */}}
+{{ $activeBtnLen := 2 }}
+{{ if not (and $p.HasPrev $p.HasNext)}}
+  {{/*  if current page is start or last, increment it  */}}
+  {{ $activeBtnLen = add $activeBtnLen 1 }}
+{{ end }}
+
 <nav class="paging">
   <ul>
-    {{ range $paginator.Pagers }}
-      {{ if eq .PageNumber $paginator.PageNumber }}
+    {{ if $p.HasPrev }}
+      <li><a href="{{ $p.Prev.URL }}" class="fas fa-arrow-left active" ></a></li>
+    {{ end }}
+    {{ range $p.Pagers }}
+
+      {{/*  when not among (i-2, i-1, i, i+1, i+2)  */}}
+      {{ if gt (math.Abs (sub .PageNumber $p.PageNumber)) $activeBtnLen }}
+        {{ if eq .PageNumber 1 }}
+          <li><a href="{{ .URL }}" class="active">1</a></li>
+        {{ end }}
+        {{ if eq .PageNumber $p.PageSize }}
+          <li><a href="{{ .URL }}" class="active">{{ $p.PageSize }}</a></li>
+        {{ end }}
+
+        {{ if eq .PageNumber 2 }}
+          <li class="flex-shrink"><span class="ellipsis">...</span></li>
+        {{ end }}
+        {{ if eq .PageNumber (sub $p.PageSize 1) }}
+          <li class="flex-shrink"><span class="ellipsis">...</span></li>
+        {{ end }}
+
+        {{ continue }}
+      {{ end }}
+
+      {{/*  when among (i-2, i-1, i, i+1, i+2)  */}}
+      {{ if eq .PageNumber $p.PageNumber }}
         <li><span class="disabled">{{ .PageNumber }}</span></li>
       {{ else }}
-        <li><a href="{{ .URL }}" >{{ .PageNumber }}</a></li>
+        <li><a href="{{ .URL }}" class="active">{{ .PageNumber }}</a></li>
       {{ end }}
+    {{ end }}
+    {{ if $p.HasNext }}
+      <li><a href="{{ $p.Next.URL }}" class="fas fa-arrow-right active" ></a></li>
     {{ end }}
   </ul>
 </nav>
