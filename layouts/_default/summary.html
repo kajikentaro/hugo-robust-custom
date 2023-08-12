@@ -15,7 +15,7 @@
       {{ with .Section }}
       <li><i class="fas fa-bookmark" aria-hidden="true"></i><a href="{{ $.Site.BaseURL }}{{ . | urlize }}/">{{ . | upper }}</a></li>
       {{ end }}
-      {{ if eq (getenv "HUGO_ENV") "DEV" }}
+      {{ if not hugo.IsProduction }}
       <li>{{ .WordCount }} Words</li>
       {{ end }}
       {{ if .Draft }}

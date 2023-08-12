@@ -5,7 +5,7 @@
       <div class="summary">{{ substr .Summary 0 60 | plainify | safeHTML }}</div>
 
       <ul class="facts sm">
-        {{ if eq (getenv "HUGO_ENV") "DEV" }}
+        {{ if not hugo.IsProduction }}
         <li>{{ .WordCount }} Words</li>
         {{ end }}
         {{ if .Draft }}

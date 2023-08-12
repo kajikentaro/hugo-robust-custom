@@ -22,7 +22,7 @@
             <h2 class="title">{{ .Title }}</h2>
 
             <ul class="facts">
-              {{ if eq (getenv "HUGO_ENV") "DEV" }}
+              {{ if not hugo.IsProduction }}
               <li>{{ .WordCount }} Words</li>
               {{ end }}
               {{ if .Draft }}
