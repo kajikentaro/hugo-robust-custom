@@ -64,21 +64,21 @@
     {{ if $p.HasPrev }}
       <li><a href="{{ $p.Prev.URL }}" class="fas fa-arrow-left active" ></a></li>
     {{ end }}
-    {{ range $p.Pagers }}
 
+    {{ range $p.Pagers }}
       {{/*  when not among (i-2, i-1, i, i+1, i+2)  */}}
       {{ if gt (math.Abs (sub .PageNumber $p.PageNumber)) $activeBtnLen }}
         {{ if eq .PageNumber 1 }}
           <li><a href="{{ .URL }}" class="active">1</a></li>
         {{ end }}
-        {{ if eq .PageNumber $p.PageSize }}
-          <li><a href="{{ .URL }}" class="active">{{ $p.PageSize }}</a></li>
+        {{ if eq .PageNumber $p.TotalPages }}
+          <li><a href="{{ .URL }}" class="active">{{ .PageNumber }}</a></li>
         {{ end }}
 
         {{ if eq .PageNumber 2 }}
           <li class="flex-shrink"><span class="ellipsis">...</span></li>
         {{ end }}
-        {{ if eq .PageNumber (sub $p.PageSize 1) }}
+        {{ if eq .PageNumber (sub $p.TotalPages 1) }}
           <li class="flex-shrink"><span class="ellipsis">...</span></li>
         {{ end }}
 
@@ -92,6 +92,7 @@
         <li><a href="{{ .URL }}" class="active">{{ .PageNumber }}</a></li>
       {{ end }}
     {{ end }}
+
     {{ if $p.HasNext }}
       <li><a href="{{ $p.Next.URL }}" class="fas fa-arrow-right active" ></a></li>
     {{ end }}
