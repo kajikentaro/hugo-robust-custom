@@ -1,115 +1,119 @@
 <!DOCTYPE html>
 <html lang="{{ .Page.Params.language | default .Site.Language.Lang }}">
-  <head>
-    <meta charset="utf-8">
-    <title>{{ block "title" . }}{{ end }}{{ .Site.Title }}</title>
-    {{ partial "meta.html" . }}
-    {{ block "meta" . }}{{ end }}
+<head>
+  <meta charset="utf-8">
+  <title>{{ block "title" . }}{{ end }}{{ .Site.Title }}</title>
 
-    <link rel="canonical" href="{{ .Permalink }}">
-
-    {{ with .Site.Params.googlefonts }}
-    <link href="{{ . }}" rel="stylesheet">
-    {{ else }}
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-    {{ end }}
-    {{ if .Site.Params.EnableHighlight | default false }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css">
-    {{ end }}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
-    <style>
-{{ with resources.Get "styles.scss" | toCSS }}
-  {{ replace .Content `@charset "UTF-8";` "" | safeCSS }}
-{{ end }}
-{{ if .Site.Params.Author }}
-  {{ with resources.Get "author.scss" | toCSS }}
-    {{ replace .Content `@charset "UTF-8";` "" | safeCSS }}
+  {{ if and .Site.Params.GoogleTagManager hugo.IsProduction }}
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','{{ .Site.Params.GoogleTagManager }}');</script>
   {{ end }}
-{{ end }}
 
-.thumb {
-  background-image: url("{{ "images/default.jpg" | absURL }}");
-  background-size: cover;
-  background-position: center;
-}
-{{ range $p := .Site.RegularPages }}
-  {{ with $p.Params.thumbnail }}
-.thumb-{{ $p.File.UniqueID }} {
-  background-image: url("{{ printf "%s%s" $p.Permalink . | absURL }}");
-}
+  {{ partial "meta.html" . }}
+  {{ partial "meta_og.html" . }}
+  {{ block "meta" . }}{{ end }}
+
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{ with .Site.Params.googlefonts }}
+  <link href="{{ . }}" rel="stylesheet">
+  {{ else }}
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
   {{ end }}
-{{ end }}
+  {{ if .Site.Params.EnableHighlight | default false }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/default.min.css">
+  {{ end }}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
+  <style>
+    {{ with resources.Get "styles.scss" | toCSS }}
+      {{ replace .Content `@charset "UTF-8";` "" | safeCSS }}
+    {{ end }}
+    {{ if .Site.Params.Author }}
+      {{ with resources.Get "author.scss" | toCSS }}
+        {{ replace .Content `@charset "UTF-8";` "" | safeCSS }}
+      {{ end }}
+    {{ end }}
 
-{{ with .Site.Params.fontfamily }} body { font-family: {{ . | safeCSS }}; } {{ end }}
-{{ with .Site.Params.logofontfamily }} .h-logo { font-family: {{ . | safeCSS }}; } {{ end }}
-{{ partial "custom.css" . | safeCSS }}
-    </style>
-{{ if and .Site.GoogleAnalytics hugo.IsProduction }}
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    .thumb {
+      background-image: url("{{ "images/default.jpg" | absURL }}");
+      background-size: cover;
+      background-position: center;
+    }
+    {{ range $p := .Site.RegularPages }}
+      {{ with $p.Params.thumbnail }}
+    .thumb-{{ $p.File.UniqueID }} {
+      background-image: url("{{ printf "%s%s" $p.Permalink . | absURL }}");
+    }
+      {{ end }}
+    {{ end }}
 
-  gtag('config', '{{ .Site.GoogleAnalytics }}');
-</script>
-{{ end }}
-  </head>
-  <body>
-    <header class="l-header">
-        <h1 class="logo">
-          <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-        </h1>
-        {{ with .Site.Params.Description }}
-        <span class="description">
-          {{ . | markdownify}}
-        </span>
-        {{ end }}
-    </header>
+    {{ with .Site.Params.fontfamily }} body { font-family: {{ . | safeCSS }}; } {{ end }}
+    {{ with .Site.Params.logofontfamily }} .h-logo { font-family: {{ . | safeCSS }}; } {{ end }}
+    {{ partial "custom.css" . | safeCSS }}
+  </style>
+  {{ if and .Site.GoogleAnalytics hugo.IsProduction }}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '{{ .Site.GoogleAnalytics }}');</script>
+  {{ end }}
+</head>
+<body>
+  {{ if and .Site.Params.GoogleTagManager hugo.IsProduction }}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ .Site.Params.GoogleTagManager }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  {{ end }}
+  <header class="l-header">
+      <h1 class="logo">
+        <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+      </h1>
+      {{ with .Site.Params.Description }}
+      <span class="description">
+        {{ . | markdownify}}
+      </span>
+      {{ end }}
+  </header>
 
-    <main>
-      <div class="l-container">
-        <div class="mrow">
-        <div class="mcol c8">
-          {{ partial "ad_tile.html" "horizontal" }}
-          {{ block "main" . }}{{ end }}
+  <main>
+    <div class="l-container">
+      <div class="mrow">
+      <div class="mcol c8">
+        {{ partial "ad_tile.html" "horizontal" }}
+        {{ block "main" . }}{{ end }}
+        {{ partial "ad_tile.html" "auto" }}
+      </div>
+      <div class="mcol c4">
+        <aside class="l-sidebar">
+          {{ partial "ad_tile.html" "rectangle" }}
+          {{ partial "author.html" . }}
+          {{ partial "latests.html" . }}
+          {{ partial "ad_tile.html" "rectangle" }}
+          {{ partial "categories.html" . }}
+          {{ partial "tags.html" . }}
           {{ partial "ad_tile.html" "auto" }}
-        </div>
-        <div class="mcol c4">
-          <aside class="l-sidebar">
-            {{ partial "ad_tile.html" "rectangle" }}
-            {{ partial "author.html" . }}
-            {{ partial "latests.html" . }}
-            {{ partial "ad_tile.html" "rectangle" }}
-            {{ partial "categories.html" . }}
-            {{ partial "tags.html" . }}
-            {{ partial "ad_tile.html" "auto" }}
-          </aside>
-        </div>
+        </aside>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="pc-footer">
-      <div class="container">
-        <div class="left">
-          <p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}<span class="h-logo">&copy; {{ .Site.Title }}</span>{{ end }}</p>
-          <p>{{ .Site.Params.copyright }}</p>
-        </div>
-        <div class="right">
-          <aside>
-            <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-            <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-            <p><a href="https://github.com/kajikentaro/hugo-robust-custom">Some updates into Robust</a>.</p>
-          </aside>
-        </div>
+  <footer class="pc-footer">
+    <div class="container">
+      <div class="left">
+        <p>{{ with .Site.Copyright }}{{ . | safeHTML }}{{ else }}<span class="h-logo">&copy; {{ .Site.Title }}</span>{{ end }}</p>
+        <p>{{ .Site.Params.copyright }}</p>
       </div>
-    </footer>
+      <div class="right">
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+          <p><a href="https://github.com/kajikentaro/hugo-robust-custom">Some updates into Robust</a>.</p>
+        </aside>
+      </div>
+    </div>
+  </footer>
 
-    {{ if .Site.Params.EnableHighlight | default false }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js" crossorigin="anonymous"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    {{ end }}
-  </body>
+  {{ if .Site.Params.EnableHighlight | default false }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js" crossorigin="anonymous"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  {{ end }}
+</body>
 </html>
 
