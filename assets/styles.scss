@@ -296,10 +296,10 @@ article {
     }
 
     .inner {
-      display: table-cell;
+      display: flex;
       vertical-align: middle;
-      height: 5rem;
       padding: 0.5rem;
+      flex-direction: column;
     }
 
     .thumb {
@@ -314,11 +314,17 @@ article {
       line-height: 1.2rem;
       margin-bottom: 0.25rem;
       position: relative;
-      margin-left: 0.6em;
+      padding-left: 0.6em;
+
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
 
       &::before {
         position: absolute;
-        left: -0.6em;
+        left: 0;
         height: 100%;
         display: block;
         width: 3px;
@@ -330,6 +336,11 @@ article {
     .summary {
       font-size: 0.8rem;
       margin-bottom: 6px;
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
 
     ul.terms {

@@ -2,7 +2,7 @@
   <a href="{{ .Permalink }}">
     <div class="inner">
       <div class="title">{{ .Title }}</div>
-      <div class="summary">{{ substr .Summary 0 60 | plainify | safeHTML }}</div>
+      <div class="summary">{{ substr .Summary 0 100 | plainify | safeHTML }}</div>
 
       <ul class="facts sm">
         {{ if not hugo.IsProduction }}
