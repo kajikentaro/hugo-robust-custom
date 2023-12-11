@@ -34,19 +34,6 @@
       {{ end }}
     {{ end }}
 
-    .thumb {
-      background-image: url("{{ "images/default.jpg" | absURL }}");
-      background-size: cover;
-      background-position: center;
-    }
-    {{ range $p := .Site.RegularPages }}
-      {{ with $p.Params.thumbnail }}
-    .thumb-{{ $p.File.UniqueID }} {
-      background-image: url("{{ printf "%s%s" $p.Permalink . | absURL }}");
-    }
-      {{ end }}
-    {{ end }}
-
     {{ with .Site.Params.fontfamily }} body { font-family: {{ . | safeCSS }}; } {{ end }}
     {{ with .Site.Params.logofontfamily }} .h-logo { font-family: {{ . | safeCSS }}; } {{ end }}
     {{ partial "custom.css" . | safeCSS }}
