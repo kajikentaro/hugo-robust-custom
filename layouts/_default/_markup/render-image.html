@@ -1,6 +1,12 @@
 {{ $altText := .Text }}
-{{ with $.Page.Resources.GetMatch .Destination }}
-{{ with .Resize (printf "%dx%d webp" .Width .Height) }}
-<img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="{{ $altText }}" />
-{{ end }}
+{{ $resource := $.Page.Resources.GetMatch .Destination }}
+{{ if $resource }}
+  {{ $ext := $resource | path.Ext }}
+  {{ if eq $ext ".gif" }}
+    <img src="{{ $resource.RelPermalink }}" alt="{{ $altText }}" />
+  {{ else }}
+    {{ with $resource.Resize (printf "%dx%d webp" $resource.Width $resource.Height) }}
+      <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="{{ $altText }}" />
+    {{ end }}
+  {{ end }}
 {{ end }}
