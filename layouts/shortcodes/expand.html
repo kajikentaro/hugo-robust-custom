@@ -1,0 +1,26 @@
+<div class="expand">
+  <div class="expand-label" style="cursor: pointer;" onclick="toggleExpand(this)">
+    <i class="fas fa-chevron-right"></i>
+    <span>
+      {{.Get 0 | default "クリックして展開"}}
+    </span>
+  </div>
+  <div style="display: none; margin-top: 1rem">
+    {{.Inner | markdownify}}
+  </div>
+</div>
+
+<script>
+  function toggleExpand(element) {
+    var content = element.nextElementSibling;
+    var icon = element.querySelector('i');
+
+    if (content.style.display === 'none' || content.style.display === '') {
+      content.style.display = 'block';
+      icon.className = 'fas fa-chevron-down';
+    } else {
+      content.style.display = 'none';
+      icon.className = 'fas fa-chevron-right';
+    }
+  }
+</script>
