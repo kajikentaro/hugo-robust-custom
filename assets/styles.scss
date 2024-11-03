@@ -373,8 +373,8 @@ article {
       aspect-ratio: 16/9;
       max-height: 15rem;
 
-      img{
-        width:100%;
+      img {
+        width: 100%;
         object-fit: contain;
         height: 100%;
       }
@@ -472,23 +472,35 @@ article {
           font-size: 0.9rem;
         }
 
-        code {
-          font-family: Menlo, Consolas, monospace;
-          font-size: 0.7rem;
-        }
+        .code-wrapper {
+          position: relative;
 
-        pre {
-          font-family: Menlo, Consolas, monospace;
-          font-size: 0.7rem;
-          background-color: #333;
-          color: #fff;
-          line-height: 1rem;
-          margin: 1.5rem -2rem;
-          overflow: auto;
+          .copy-button {
+            position: absolute;
+            right: 0;
+            background-color: white;
+            border: none;
+            height: 25px;
+            width: 60px;
 
-          > code {
-            display: block;
-            padding: 1rem 2rem;
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+
+          pre {
+            font-family: Menlo, Consolas, monospace;
+            font-size: 0.7rem;
+            background-color: #333;
+            color: #fff;
+            line-height: 1rem;
+            margin: 1.5rem -2rem;
+            overflow: auto;
+
+            > code {
+              display: block;
+              padding: 25px 2rem 1rem 2rem;
+            }
           }
         }
 

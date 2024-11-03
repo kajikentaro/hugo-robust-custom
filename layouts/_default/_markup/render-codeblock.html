@@ -1,0 +1,36 @@
+<div class="code-wrapper">
+  <button class="copy-button" title="Copy to clipboard" onclick="copyToClipboard(this, '{{.Ordinal}}')">Copy</button>
+  {{ $result := transform.HighlightCodeBlock . }}
+  {{ $result.Wrapped }}
+</div>
+
+
+<script id="code-for-copy-{{.Ordinal}}" type="text/plain">
+  {{ .Inner }}
+</script>
+
+<script>
+  function decodeHTML(encodedStr) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(encodedStr, "text/html");
+    return doc.documentElement.textContent;
+  }
+
+  function copyToClipboard(button, ordinal) {
+    button.innerText = 'Copied!';
+    window.setTimeout(() => {
+      button.innerText = 'Copy';
+    }, 1000);
+
+    const targetElement = document.getElementById('code-for-copy-' + ordinal);
+    const content = targetElement.textContent;
+    const decoded = decodeHTML(content);
+
+    const textArea = document.createElement('textarea');
+    textArea.value = decoded
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+  }
+</script>
